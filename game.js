@@ -15,9 +15,13 @@ function drawBall() {
   context.closePath();
 }
 
-setInterval(() => {
+function draw() {
   context.clearRect(0, 0, canvas.width, canvas.height);
   drawBall();
   x += 2;
   y += 2;
-}, 100);
+
+  requestAnimationFrame(draw);
+}
+
+draw();
