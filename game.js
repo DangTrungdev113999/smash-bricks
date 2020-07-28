@@ -19,9 +19,9 @@ let IS_GAME_OVER = false;
 let IS_GAME_START = false;
 
 const paddle = {
-  width: 350,
+  width: 70,
   height: 10,
-  x: canvas.width / 2 - 350 / 2,
+  x: canvas.width / 2 - 70 / 2,
   y: canvas.height - 10,
   speed: 20,
   isMoveLeft: false,
@@ -52,6 +52,7 @@ const bricklist = [];
 // MARGIN = OFFSET = 25 => WIDTH = 70 height = 15
 // ROW = 3
 // COL = 5
+
 (function initBricks() {
   for (let i = 0; i < brickConfig.totalRow; i++) {
     for (let j = 0; j < brickConfig.totalCol; j++) {
@@ -139,7 +140,7 @@ function handlePaddlePosition() {
 }
 
 function handleBallCollideBounds() {
-  if (ball.x < ball.radius || ball.x > canvas.width - ball.radius) {
+  if (ball.x < ball.radius || ball.x >= canvas.width - ball.radius) {
     changeColor();
     ball.dx = -ball.dx;
   }
@@ -149,7 +150,7 @@ function handleBallCollideBounds() {
   }
 }
 
-function handleBallColliPaddle() {
+function handleBallCollidePaddle() {
   if (
     ball.x + ball.radius >= paddle.x &&
     ball.x + ball.radius <= paddle.x + paddle.width &&
@@ -159,7 +160,7 @@ function handleBallColliPaddle() {
   }
 }
 
-function handleBallColliBrick() {
+function handleBallCollideBrick() {
   bricklist.forEach((b) => {
     if (!b.isBreak) {
       if (
@@ -210,8 +211,8 @@ function draw() {
       updateBallPosition();
 
       handlePaddlePosition();
-      handleBallColliPaddle();
-      handleBallColliBrick();
+      handleBallCollidePaddle();
+      handleBallCollideBrick();
     }
 
     checkGameOver();
